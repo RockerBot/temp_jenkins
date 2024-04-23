@@ -29,8 +29,10 @@ pipeline {
         }
         stage('Docker Login') {
            steps {
-               echo '$$DOCKERHUB_CREDENTIALS_USR'
+               echo '$DOCKERHUB_CREDENTIALS_USR'
+               sh 'echo $DOCKERHUB_CREDENTIALS_USR'
                echo '$DOCKERHUB_CREDENTIALS_PSW'
+               sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
                echo 'Logon in to docker hub'
                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                echo 'Login Successfull'
@@ -38,7 +40,7 @@ pipeline {
        }
         stage("have docker?"){
             steps {
-                sh 'docker'
+                sh 'docker version'
                 sh dir 
                 sh ls
             }
@@ -58,6 +60,9 @@ pipeline {
         stage('Build Images') {
             steps {
                 script{
+                    sh 'dir'
+                    sh 'ls'
+                    
                     sh 'echo "pre customer image"'
                     customerImage = docker.build("${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
                     sh 'echo "post customer image"'
