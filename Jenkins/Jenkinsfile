@@ -29,22 +29,18 @@ pipeline {
         }
         stage('Docker Login') {
            steps {
-               echo '$DOCKERHUB_CREDENTIALS_USR'
-               sh 'echo $DOCKERHUB_CREDENTIALS_USR'
-               echo '$DOCKERHUB_CREDENTIALS_PSW'
-               sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
                echo 'Logon in to docker hub'
                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                echo 'Login Successfull'
            }
        }
-        stage("have docker?"){
-            steps {
-                sh 'docker version'
-                sh dir 
-                sh ls
-            }
-        }
+        // stage("have docker?"){
+        //     steps {
+        //         sh 'docker version'
+        //         sh 'dir' 
+        //         sh 'ls'
+        //     }
+        // }
         stage('client izer') {
             steps {
                 dir('client') {
