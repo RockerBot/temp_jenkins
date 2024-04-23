@@ -26,6 +26,13 @@ pipeline {
                 sh 'dir'
             }
         }
+        stage("have docker?"){
+            steps {
+                sh 'docker'
+                sh dir 
+                sh ls
+            }
+        }
         stage('client izer') {
             steps {
                 dir('client') {
