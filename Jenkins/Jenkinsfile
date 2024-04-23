@@ -60,11 +60,12 @@ pipeline {
                     sh 'ls'
                     
                     sh 'echo "pre customer image"'
-                    customerImage = docker.build("${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
+                    // customerImage = docker.build("${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
+                    sh "docker build -t ${customermicroservice} --pull --file server/customer/Dockerfile server/customer"
                     sh 'echo "post customer image"'
-                    productImage = docker.build("${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
-                    storeImage = docker.build("${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
-                    databaseImage = docker.build("${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
+                    // productImage = docker.build("${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
+                    // storeImage = docker.build("${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
+                    // databaseImage = docker.build("${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
                     
                     // dir('server/customer') {
                     //     script {
