@@ -129,6 +129,8 @@ pipeline {
                 echo 'pods'
                 bat 'dir'
                 // bat 'minikube start'
+                bat 'kubectl version'
+                echo 'applying k8s'
                 bat 'kubectl apply -f ./k8s'
                 bat 'minikube addons enable ingress'
                 bat 'minikube tunnel'
