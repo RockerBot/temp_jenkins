@@ -40,7 +40,7 @@ pipeline {
         //     steps {
         //         bat 'docker version'
         //         bat 'dir' 
-        //         bat 'ls'
+        //         // bat 'ls'
         //     }
         // }
         stage('client izer') {
@@ -48,7 +48,7 @@ pipeline {
                 dir('client') {
                     script {
                         bat 'dir'
-                        bat 'ls'
+                        // bat 'ls'
                         // bat 'npm i'
                         // bat 'npm run build'
                     }
@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script{
                     bat 'dir'
-                    bat 'ls'
+                    // bat 'ls'
                     
                     bat 'echo "pre customer image"'
                     customerImage = docker.build("${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
