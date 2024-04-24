@@ -65,9 +65,9 @@ pipeline {
                     customerImage = docker.build("${dockerhubuser}/${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
                     // bat "docker build -t ${customermicroservice} --pull --file server/customer/Dockerfile server/customer"
                     bat 'echo "post customer image"'
-                    // productImage = docker.build("${dockerhubuser}/${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
-                    // storeImage = docker.build("${dockerhubuser}/${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
-                    // databaseImage = docker.build("${dockerhubuser}/${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
+                    productImage = docker.build("${dockerhubuser}/${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
+                    storeImage = docker.build("${dockerhubuser}/${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
+                    databaseImage = docker.build("${dockerhubuser}/${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
                     
                     // dir('server/customer') {
                     //     script {
