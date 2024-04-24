@@ -131,11 +131,11 @@ pipeline {
             }
         }
 
-        // stage('Deploy kubernetes') {
-        //     steps {
-        //         sh './kubectl apply -f ./k8s'
-        //     }
-        // }
+        stage('Deploy kubernetes') {
+            steps {
+                sh './kubectl apply -f ./k8s'
+            }
+        }
         
         stage('test') {
             steps {
