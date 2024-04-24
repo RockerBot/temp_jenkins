@@ -124,25 +124,82 @@ pipeline {
             }
         }
 
-        stage('List pods') {
+        stage('kubectl') {
             steps{
                 sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
                 sh 'chmod u+x ./kubectl'
-                sh 'mv kubectl /usr/local/bin/'
             }
         }
 
-        stage('Deploy kubernetes') {
-            steps {
-                sh 'ls'
-                sh './kubectl apply -f ./k8s'
+        // stage('Deploy kubernetes') {
+        //     steps {
+        //         sh 'ls'
+        //         sh './kubectl apply -f ./k8s/ingress-service.yml'
                 
+        //     }
+        // }
+        stage('Deploy Microservices') {
+            ls
+            steps {
+                script{
+                    echo 'Microservice deployed'
+                    // kubernetes.deploy(
+                    //     configs: './k8s/customer-server-cluster-ip-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/customer-server-deployment.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/database-server-cluster-ip-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/database-server-deployment.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/ingress-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/products-server-cluster-ip-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/products-server-cluster-ip-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/products-server-deployment.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/store-server-cluster-ip-service.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                    // kubernetes.deploy(
+                    //     configs: './k8s/store-server-deployment.yml',
+                    //     delegate: true,
+                    //     enableConfigSubstitution: true
+                    // )
+                }
             }
         }
         
         stage('test') {
             steps {
-                echo 'to test'
+                echo 'run succesfully'
             }
         }
     }
