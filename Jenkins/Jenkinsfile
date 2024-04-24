@@ -23,7 +23,7 @@ pipeline {
         stage('Checkout Source') {
             steps {
                 git branch: 'main', url: 'https://github.com/Vaarun-Kamath/E-Commerce-Microservices.git'
-                sh 'echo "git clone completed"'
+                echo "git clone completed"
                 sh 'dir'
             }
         }
