@@ -107,7 +107,7 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
-                    echo '${dockerhubuser}'
+                    echo dockerhubuser
                     docker.withRegistry('https://index.docker.io/v1/', dockerhubuser) {
                         customerImage.push()
                         productImage.push()
