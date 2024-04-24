@@ -14,7 +14,7 @@ pipeline {
         // dockerhubuser = 'varunkamathcs594'
         dockerhubuser = 'rockerbot'
         
-        DOCKERHUB_CREDENTIALS = credentials(dockerhubuser)
+        DOCKERHUB_CREDENTIALS = credentials('rockerbot')
         // DOCKER_HOST = 'unix:///var/run/docker.sock'  // For Linux/Mac
         // DOCKER_HOST = 'tcp://host.docker.internal:2375'  // For Windows
     }
