@@ -126,22 +126,22 @@ pipeline {
             }
         }
 
-        stage('List pods') {
-            steps{
-                echo 'pods'
-                bat 'dir'
-                // bat 'minikube start'
-                bat 'kubectl version'
-                echo 'applying k8s'
-                // bat 'kubectl apply -f ./k8s'
-                // bat 'minikube addons enable ingress'
-                // bat 'minikube tunnel'
+        // stage('List pods') {
+        //     steps{
+        //         echo 'pods'
+        //         // bat 'dir'
+        //         // bat 'minikube start'
+        //         // bat 'kubectl version'
+        //         // echo 'applying k8s'
+        //         // bat 'kubectl apply -f ./k8s'
+        //         // bat 'minikube addons enable ingress'
+        //         // bat 'minikube tunnel'
 
-                // bat 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-                // bat 'chmod u+x ./kubectl'
-                // bat minikube run
-            }
-        }
+        //         // bat 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+        //         // bat 'chmod u+x ./kubectl'
+        //         // bat minikube run
+        //     }
+        // }
 
         // stage('Deploy kubernetes') {
         //     steps {
@@ -149,9 +149,9 @@ pipeline {
         //     }
         // }
         
-        stage('test') {
+        stage('Validation') {
             steps {
-                echo 'to test'
+                echo 'Containers built and pushed to docker hub'
             }
         }
     }
