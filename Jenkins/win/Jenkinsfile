@@ -127,7 +127,7 @@ pipeline {
         stage('List pods') {
             steps{
                 echo 'pods'
-                bat 'minikube start'
+                // bat 'minikube start'
                 bat 'kubectl apply -f ./k8s'
                 bat 'minikube addons enable ingress'
                 bat 'minikube tunnel'
