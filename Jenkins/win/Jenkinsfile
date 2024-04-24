@@ -107,7 +107,7 @@ pipeline {
             steps {
                 script {
                     echo 'pushing imgs'
-                    docker.withRegistry('https://index.docker.io/v1/', ${dockerhubuser}) {
+                    docker.withRegistry('https://index.docker.io/v1/', dockerhubuser) {
                         customerImage.push()
                         productImage.push()
                         storeImage.push()
@@ -127,6 +127,11 @@ pipeline {
         stage('List pods') {
             steps{
                 echo 'pods'
+                bat 'minikube start'
+                bat 'kubectl apply -f ./k8s'
+                bat 'minikube addons enable ingress'
+                bat 'minikube tunnel'
+
                 // bat 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
                 // bat 'chmod u+x ./kubectl'
                 // bat minikube run
