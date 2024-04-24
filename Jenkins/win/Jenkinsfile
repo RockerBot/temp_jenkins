@@ -4,11 +4,11 @@ pipeline {
         productImage    = ''
         storeImage      = ''
         databaseImage   = ''
-        customermicroservice    = 'varunchandrashekar1/customer-server-593-594-606-607:latest'
-        productmicroservice     = 'varunchandrashekar1/products-server-593-594-606-607:latest'
-        storemicroservice       = 'varunchandrashekar1/store-server-593-594-606-607:latest'
-        databasemicroservice    = 'varunchandrashekar1/database-server-593-594-606-607:latest'
-        
+        customermicroservice    = 'customer-server-593-594-606-607:latest'
+        productmicroservice     = 'products-server-593-594-606-607:latest'
+        storemicroservice       = 'store-server-593-594-606-607:latest'
+        databasemicroservice    = 'database-server-593-594-606-607:latest'
+        dockerhubuser = 'rockerbot'
         DOCKERHUB_CREDENTIALS = credentials('varunchandrashekar1dockerhub')
     }
 
@@ -62,18 +62,18 @@ pipeline {
                     // bat 'ls'
                     
                     bat 'echo "pre customer image"'
-                    customerImage = docker.build("${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
+                    customerImage = docker.build("${dockerhubuser}/${customermicroservice}", "--pull --file server/customer/Dockerfile server/customer")
                     // bat "docker build -t ${customermicroservice} --pull --file server/customer/Dockerfile server/customer"
                     bat 'echo "post customer image"'
-                    // productImage = docker.build("${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
-                    // storeImage = docker.build("${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
-                    // databaseImage = docker.build("${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
+                    // productImage = docker.build("${dockerhubuser}/${productmicroservice}", "--pull --file server/products/Dockerfile server/products")
+                    // storeImage = docker.build("${dockerhubuser}/${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
+                    // databaseImage = docker.build("${dockerhubuser}/${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
                     
                     // dir('server/customer') {
                     //     script {
                     //         bat 'dir'
                     //         // customerImage = docker.build customermicroservice
-                    //         bat "docker build -t ${customermicroservice} ."
+                    //         bat "docker build -t ${dockerhubuser}/${customermicroservice} ."
                     //     }
                     // }
                     
@@ -81,7 +81,7 @@ pipeline {
                     //     script {
                     //         bat 'dir'
                     //         // productImage = docker.build productmicroservice
-                    //         bat "docker build -t ${productmicroservice} ."
+                    //         bat "docker build -t ${dockerhubuser}/${productmicroservice} ."
                     //     }
                     // }
                     
@@ -89,7 +89,7 @@ pipeline {
                     //     script {
                     //         bat 'dir'
                     //         // storeImage = docker.build storemicroservice
-                    //         bat "docker build -t ${storemicroservice} ."
+                    //         bat "docker build -t ${dockerhubuser}/${storemicroservice} ."
                     //     }
                     // }
                     
@@ -97,7 +97,7 @@ pipeline {
                     //     script {
                     //         bat 'dir'
                     //         // databaseImage = docker.build databasemicroservice
-                    //         bat "docker build -t ${databasemicroservice} ."
+                    //         bat "docker build -t ${dockerhubuser}/${databasemicroservice} ."
                     //     }
                     // }
                 }
@@ -106,7 +106,7 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'varunchandrashekar1') {
+                    docker.withRegistry('https://index.docker.io/v1/', ${dockerhubuser}) {
                         customerImage.push()
                         productImage.push()
                         storeImage.push()
@@ -124,8 +124,10 @@ pipeline {
 
         stage('List pods') {
             steps{
-                bat 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-                bat 'chmod u+x ./kubectl'
+                echo 'pods'
+                // bat 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+                // bat 'chmod u+x ./kubectl'
+                // bat minikube run
             }
         }
 
