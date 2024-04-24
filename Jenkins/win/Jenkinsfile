@@ -9,7 +9,7 @@ pipeline {
         storemicroservice       = 'varunchandrashekar1/store-server-593-594-606-607:latest'
         databasemicroservice    = 'varunchandrashekar1/database-server-593-594-606-607:latest'
         
-        DOCKERHUB_CREDENTIALS = credentials('varunchandrashekar1dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('rockerbot')
     }
 
     agent any
