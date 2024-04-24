@@ -15,8 +15,6 @@ pipeline {
         dockerhubuser = 'rockerbot'
         
         DOCKERHUB_CREDENTIALS = credentials('rockerbot')
-        // DOCKER_HOST = 'unix:///var/run/docker.sock'  // For Linux/Mac
-        // DOCKER_HOST = 'tcp://host.docker.internal:2375'  // For Windows
     }
 
     agent any
@@ -66,58 +64,22 @@ pipeline {
                     storeImage = docker.build("${dockerhubuser}/${storemicroservice}", "--pull --file server/store/Dockerfile server/store")
                     databaseImage = docker.build("${dockerhubuser}/${databasemicroservice}", "--pull --file server/database/Dockerfile server/database")
                     sh 'echo "Images Built"'
-                    
-                    // dir('server/customer') {
-                    //     script {
-                    //         sh 'dir'
-                    //         // customerImage = docker.build customermicroservice
-                    //         sh "docker build -t ${dockerhubuser}/${customermicroservice} ."
-                    //     }
-                    // }
-                    
-                    // dir('server/products') {
-                    //     script {
-                    //         sh 'dir'
-                    //         // productImage = docker.build productmicroservice
-                    //         sh "docker build -t ${dockerhubuser}/${productmicroservice} ."
-                    //     }
-                    // }
-                    
-                    // dir('server/store') {
-                    //     script {
-                    //         sh 'dir'
-                    //         // storeImage = docker.build storemicroservice
-                    //         sh "docker build -t ${dockerhubuser}/${storemicroservice} ."
-                    //     }
-                    // }
-                    
-                    // dir('server/database') {
-                    //     script {
-                    //         sh 'dir'
-                    //         // databaseImage = docker.build databasemicroservice
-                    //         sh "docker build -t ${dockerhubuser}/${databasemicroservice} ."
-                    //     }
-                    // }
                 }
             }
         }
         stage('Push Images') {
             steps {
                 script {
-                    sh 'echo "running currently as ${dockerhubuser}"'
+                    echo "running currently as ${dockerhubuser}"
+                    echo "Pushing images"
                     docker.withRegistry('https://index.docker.io/v1/', dockerhubuser) {
                         customerImage.push()
                         productImage.push()
                         storeImage.push()
                         databaseImage.push()
                     }
+                    echo "Images pushed to ${dockerhubuser}\'s dockerhub"
                 }
-                // sh 'echo "$DOCKER_PASSWORD"'
-                // sh 'echo "$DOCKER_PASSWORD" | docker login -u varunchandrashekar1 --password-stdin'
-                // sh "docker push ${customermicroservice}"
-                // sh "docker push ${productmicroservice}"
-                // sh "docker push ${storemicroservice}"
-                // sh "docker push ${databasemicroservice}"
             }
         }
 
@@ -139,56 +101,56 @@ pipeline {
             steps {
                 script{
                     echo 'Microservice deployed'
-                    // kubernetes.deploy(
-                    //     configs: './k8s/customer-server-cluster-ip-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/customer-server-deployment.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/database-server-cluster-ip-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/database-server-deployment.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/ingress-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/products-server-cluster-ip-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/products-server-cluster-ip-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/products-server-deployment.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/store-server-cluster-ip-service.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
-                    // kubernetes.deploy(
-                    //     configs: './k8s/store-server-deployment.yml',
-                    //     delegate: true,
-                    //     enableConfigSubstitution: true
-                    // )
+                    kubernetes.deploy(
+                        configs: './k8s/customer-server-cluster-ip-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/customer-server-deployment.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/database-server-cluster-ip-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/database-server-deployment.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/ingress-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/products-server-cluster-ip-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/products-server-cluster-ip-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/products-server-deployment.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/store-server-cluster-ip-service.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
+                    kubernetes.deploy(
+                        configs: './k8s/store-server-deployment.yml',
+                        delegate: true,
+                        enableConfigSubstitution: true
+                    )
                 }
             }
         }
@@ -197,6 +159,12 @@ pipeline {
             steps {
                 echo 'run succesfully'
             }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Pipeline failed'
         }
     }
 }
