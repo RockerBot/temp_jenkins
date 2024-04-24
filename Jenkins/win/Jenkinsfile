@@ -106,12 +106,14 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
+                    echo 'pushing imgs'
                     docker.withRegistry('https://index.docker.io/v1/', ${dockerhubuser}) {
                         customerImage.push()
                         productImage.push()
                         storeImage.push()
                         databaseImage.push()
                     }
+                    echo 'pushed imgs'
                 }
                 // bat 'echo "$DOCKER_PASSWORD"'
                 // bat 'echo "$DOCKER_PASSWORD" | docker login -u varunchandrashekar1 --password-stdin'
